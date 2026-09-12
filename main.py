@@ -8,11 +8,10 @@ load_dotenv()
 EMAIL = os.environ["EMAIL"]
 PASSWORD = os.environ["APP_PASSWORD"]
 
-# Initialize both variables
 avg_o2_reading = None
 avg_pulse = None
 
-# --- SECTION 1: THE SIMPLE QUICK CHECK ---
+# --- SECTION 1: THE SIMPLE QUICK CHECK --- #
 print("--- Starting Quick Check ---")
 with BerryOximeter() as oximeter:
     oximeter.connect()
@@ -20,14 +19,14 @@ with BerryOximeter() as oximeter:
     time.sleep(10)  # Wait 10 seconds
     print("Quick check done.\n")
 
-    # --- SECTION 2: ACTUAL DATA COLLECTION/THE MATH SUMMARY ---
+    # --- SECTION 2: ACTUAL DATA COLLECTION/THE MATH SUMMARY --- #
     print("--- Starting 30-Second Data Collection ---")
     start_time = time.time()
 
     valid_readings = []
     last_alert_second = -5
 
-    while time.time() - start_time < 30:  # Collect 30 seconds of data into a bucket
+    while time.time() - start_time < 30:
         elapsed_time = time.time() - start_time
         elapsed_seconds = int(elapsed_time)
 
@@ -81,7 +80,7 @@ if avg_o2_reading is not None:
                      f"{file_contents}")
 
     try:
-        with SMTP("smtp.gmail.com", 587) as connection:  # Fixed host and added standard TLS port
+        with SMTP("smtp.gmail.com", 587) as connection:
             connection.starttls()
             connection.login(
                 user=EMAIL,
